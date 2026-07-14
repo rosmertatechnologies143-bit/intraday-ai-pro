@@ -4,6 +4,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from indicators import calculate_ema, calculate_rsi, get_signal, calculate_macd
+from news import get_market_news
 st.set_page_config(page_title="Intraday AI Pro", layout="wide")
 
 st.title("📈 Intraday AI Pro")
@@ -129,7 +130,12 @@ top_buy = df[df["Signal"] == "🟢 STRONG BUY"]
 
 st.dataframe(top_buy.head(5), use_container_width=True)
 st.dataframe(df, width="stretch")
+st.subheader("📰 Latest Market News")
 
+news = get_market_news()
+
+for item in news:
+    st.write("📰", item["title"])
 st.subheader("🤖 AI Recommendation")
 
 stock = yf.Ticker(selected_stock)
