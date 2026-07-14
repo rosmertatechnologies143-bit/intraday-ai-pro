@@ -1,5 +1,26 @@
 import feedparser
+def get_sentiment(title):
+    title = title.lower()
 
+    positive_words = [
+        "gain", "surge", "rise", "profit", "growth",
+        "record", "up", "strong", "buy", "bull"
+    ]
+
+    negative_words = [
+        "fall", "drop", "loss", "crash", "down",
+        "weak", "sell", "bear", "decline", "slip"
+    ]
+
+    for word in positive_words:
+        if word in title:
+            return "🟢 Positive"
+
+    for word in negative_words:
+        if word in title:
+            return "🔴 Negative"
+
+    return "🟡 Neutral"
 def get_market_news():
     url = "https://news.google.com/rss/search?q=Indian+stock+market&hl=en-IN&gl=IN&ceid=IN:en"
 
@@ -10,7 +31,8 @@ def get_market_news():
     for item in feed.entries[:5]:
         news.append({
             "title": item.title,
-            "link": item.link
+            "link": item.link,
+            "sentiment": get_sentiment(item.title)
         })
 
     return news

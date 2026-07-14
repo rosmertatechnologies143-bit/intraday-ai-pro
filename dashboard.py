@@ -135,7 +135,7 @@ st.subheader("📰 Latest Market News")
 news = get_market_news()
 
 for item in news:
-    st.write("📰", item["title"])
+    st.write(f'{item["sentiment"]}  {item["title"]}')
 st.subheader("🤖 AI Recommendation")
 
 stock = yf.Ticker(selected_stock)
