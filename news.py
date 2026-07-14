@@ -3,14 +3,36 @@ def get_sentiment(title):
     title = title.lower()
 
     positive_words = [
-        "gain", "surge", "rise", "profit", "growth",
-        "record", "up", "strong", "buy", "bull"
-    ]
+    "gain",
+    "surge",
+    "rise",
+    "profit",
+    "growth",
+    "record high",
+    "strong buy",
+    "bullish",
+    "expansion",
+    "beats",
+    "jumps",
+    "rally"
+]
 
     negative_words = [
-        "fall", "drop", "loss", "crash", "down",
-        "weak", "sell", "bear", "decline", "slip"
-    ]
+    "fall",
+    "falls",
+    "drop",
+    "drops",
+    "loss",
+    "crash",
+    "bearish",
+    "decline",
+    "slip",
+    "lower",
+    "weak",
+    "sell",
+    "plunge",
+    "tumbles"
+] 
 
     for word in positive_words:
         if word in title:
