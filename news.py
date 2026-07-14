@@ -46,7 +46,7 @@ def get_sentiment(title):
 def get_market_news(stock_name="Indian stock market"):
     query = stock_name.replace(".NS", "").replace("&", " ")
 
-url = f"https://news.google.com/rss/search?q={query}+India+stock&hl=en-IN&gl=IN&ceid=IN:en"
+    url = f"https://news.google.com/rss/search?q={query}+India+stock&hl=en-IN&gl=IN&ceid=IN:en"
 
     feed = feedparser.parse(url)
 
