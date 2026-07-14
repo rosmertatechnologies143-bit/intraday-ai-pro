@@ -76,3 +76,23 @@ def calculate_news_score(news):
         "neutral": neutral,
         "score": score
     }
+def get_hindi_summary(title):
+    title = title.lower()
+
+    if "bullish" in title or "buy" in title:
+        return "🟢 यह खबर शेयर के लिए सकारात्मक मानी जा रही है। खरीदारी का माहौल बन सकता है।"
+
+    elif "target" in title:
+        return "🎯 ब्रोकरेज ने शेयर का लक्ष्य मूल्य बढ़ाया है। यह निवेशकों के लिए सकारात्मक संकेत हो सकता है।"
+
+    elif "jump" in title or "surge" in title or "rise" in title:
+        return "📈 शेयर में तेजी देखने को मिली है। बाजार में खरीदारी का रुझान दिखाई दे रहा है।"
+
+    elif "fall" in title or "lower" in title or "drop" in title or "tumble" in title:
+        return "📉 शेयर या बाजार में गिरावट आई है। निवेशकों को सावधानी बरतनी चाहिए।"
+
+    elif "sell" in title:
+        return "⚠️ कंपनी से जुड़ी बिक्री की खबर है। इसका असर शेयर की कीमत पर पड़ सकता है।"
+
+    else:
+        return "📰 यह एक सामान्य बाजार समाचार है। निवेश करने से पहले पूरी जानकारी देखें।"

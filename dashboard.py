@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from indicators import calculate_ema, calculate_rsi, get_signal, calculate_macd
-from news import get_market_news, calculate_news_score
+from news import get_market_news, calculate_news_score, get_hindi_summary
 st.set_page_config(page_title="Intraday AI Pro", layout="wide")
 
 st.title("📈 Intraday AI Pro")
@@ -141,6 +141,8 @@ for item in news:
         f'{item["sentiment"]} '
         f'[{item["title"]}]({item["link"]})'
     )
+
+    st.caption(get_hindi_summary(item["title"]))
 st.subheader("🤖 AI Recommendation")
 
 stock = yf.Ticker(selected_stock)
