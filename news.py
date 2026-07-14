@@ -60,3 +60,19 @@ def get_market_news(stock_name="Indian stock market"):
         })
 
     return news
+def calculate_news_score(news):
+    positive = sum(1 for item in news if "Positive" in item["sentiment"])
+    negative = sum(1 for item in news if "Negative" in item["sentiment"])
+    neutral = sum(1 for item in news if "Neutral" in item["sentiment"])
+
+    score = (positive * 20) + (neutral * 10)
+
+    if score > 100:
+        score = 100
+
+    return {
+        "positive": positive,
+        "negative": negative,
+        "neutral": neutral,
+        "score": score
+    }

@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from indicators import calculate_ema, calculate_rsi, get_signal, calculate_macd
-from news import get_market_news
+from news import get_market_news, calculate_news_score
 st.set_page_config(page_title="Intraday AI Pro", layout="wide")
 
 st.title("📈 Intraday AI Pro")
@@ -133,7 +133,9 @@ st.dataframe(df, width="stretch")
 st.subheader("📰 Latest Market News")
 
 news = get_market_news(selected_stock)
+summary = calculate_news_score(news)
 
+st.info(f"🟢 Positive: {summary['positive']} | 🔴 Negative: {summary['negative']} | 🟡 Neutral: {summary['neutral']} | ⭐ News Score: {summary['score']}/100")
 for item in news:
     st.write(f'{item["sentiment"]}  {item["title"]}')
 st.subheader("🤖 AI Recommendation")
