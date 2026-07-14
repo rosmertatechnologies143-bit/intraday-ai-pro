@@ -4,7 +4,12 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from indicators import calculate_ema, calculate_rsi, get_signal, calculate_macd
-from news import get_market_news, calculate_news_score, get_hindi_summary
+from news import (
+    get_market_news,
+    get_general_market_news,
+    calculate_news_score,
+    get_hindi_summary,
+)
 st.set_page_config(page_title="Intraday AI Pro", layout="wide")
 
 st.title("📈 Intraday AI Pro")
@@ -130,6 +135,14 @@ top_buy = df[df["Signal"] == "🟢 STRONG BUY"]
 
 st.dataframe(top_buy.head(5), use_container_width=True)
 st.dataframe(df, width="stretch")
+# 🌍 General Market News
+st.subheader("🌍 Latest Market News")
+
+market_news = get_general_market_news()
+
+for item in market_news:
+    st.markdown(f'{item["sentiment"]} **{item["title"]}**')
+    st.caption(get_hindi_summary(item["title"]))
 st.subheader("📰 Latest Market News")
 
 news = get_market_news(selected_stock)

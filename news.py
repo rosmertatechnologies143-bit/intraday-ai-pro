@@ -96,3 +96,19 @@ def get_hindi_summary(title):
 
     else:
         return "📰 यह एक सामान्य बाजार समाचार है। निवेश करने से पहले पूरी जानकारी देखें।"
+    
+def get_general_market_news():
+    url = "https://news.google.com/rss/search?q=Indian+Stock+Market+OR+Sensex+OR+Nifty+OR+RBI+OR+Crude+Oil&hl=en-IN&gl=IN&ceid=IN:en"
+
+    feed = feedparser.parse(url)
+
+    news = []
+
+    for item in feed.entries[:5]:
+        news.append({
+            "title": item.title,
+            "link": item.link,
+            "sentiment": get_sentiment(item.title)
+        })
+
+    return news
