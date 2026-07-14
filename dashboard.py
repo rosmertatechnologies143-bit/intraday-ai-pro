@@ -137,12 +137,11 @@ summary = calculate_news_score(news)
 
 st.info(f"🟢 Positive: {summary['positive']} | 🔴 Negative: {summary['negative']} | 🟡 Neutral: {summary['neutral']} | ⭐ News Score: {summary['score']}/100")
 for item in news:
-    st.markdown(
-        f'{item["sentiment"]} '
-        f'[{item["title"]}]({item["link"]})'
-    )
+   for item in news:
+    st.markdown(f'{item["sentiment"]} **{item["title"]}**')
 
-    st.caption(get_hindi_summary(item["title"]))
+    with st.expander("🇮🇳 हिंदी में पढ़ें"):
+        st.write(get_hindi_summary(item["title"]))
 st.subheader("🤖 AI Recommendation")
 
 stock = yf.Ticker(selected_stock)
