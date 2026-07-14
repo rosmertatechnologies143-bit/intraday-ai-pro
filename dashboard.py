@@ -140,7 +140,7 @@ for item in news:
    for item in news:
     st.markdown(f'{item["sentiment"]} **{item["title"]}**')
 
-    with st.expander("🇮🇳 हिंदी में पढ़ें"):
+    with st.expander("📖 हिंदी सारांश"):
         st.write(get_hindi_summary(item["title"]))
 st.subheader("🤖 AI Recommendation")
 
