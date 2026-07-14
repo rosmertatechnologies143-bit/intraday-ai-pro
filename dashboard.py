@@ -84,15 +84,16 @@ for symbol in stocks:
             confidence = "70%"
 
         rows.append({
-            "Stock": symbol,
-            "Price (₹)": price,
-            "RSI": rsi,
-            "Signal": signal,
-            "Entry": entry,
-            "Stop Loss": stoploss,
-            "Target": target,
-            "Confidence": confidence
-        })
+    "Stock": symbol,
+    "Price (₹)": price,
+    "RSI": rsi,
+    "Signal": signal,
+    "Entry": entry,
+    "Stop Loss": stoploss,
+    "Target": target,
+    "Confidence": confidence,
+    "AI Score": ai_score,
+})
 
     except Exception as e:
         print(e)
@@ -124,6 +125,7 @@ st.subheader("🏆 Top Intraday Picks")
 top_buy = df[df["Signal"] == "🟢 STRONG BUY"]
 
 st.dataframe(top_buy.head(5), use_container_width=True)
+df = df.sort_values(by="AI Score", ascending=False)
 st.dataframe(df, width="stretch")
 
 st.subheader("🤖 AI Recommendation")
@@ -178,13 +180,13 @@ else:
     rr_ratio = 0
 if "BUY" in signal:
     confidence = "90%"
-    trend = "📈 Bullish"
+    ai_score = 95
 elif "SELL" in signal:
     confidence = "88%"
-    trend = "📉 Bearish"
+    ai_score = 30
 else:
     confidence = "70%"
-    trend = "➡ Sideways"
+    ai_score = 65
 
 st.info(f"""
 ### {selected_stock}
