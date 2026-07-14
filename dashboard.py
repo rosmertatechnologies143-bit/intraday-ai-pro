@@ -140,8 +140,14 @@ for item in news:
    for item in news:
     st.markdown(f'{item["sentiment"]} **{item["title"]}**')
 
-    with st.expander("🇮🇳 हिंदी में पढ़ें"):
+    col1, col2 = st.columns([1, 1])
+
+with col1:
+    with st.expander("🇮🇳 हिंदी"):
         st.write(get_hindi_summary(item["title"]))
+
+with col2:
+    st.link_button("🌐 Original News", item["link"])
 st.subheader("🤖 AI Recommendation")
 
 stock = yf.Ticker(selected_stock)
