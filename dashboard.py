@@ -137,7 +137,10 @@ summary = calculate_news_score(news)
 
 st.info(f"🟢 Positive: {summary['positive']} | 🔴 Negative: {summary['negative']} | 🟡 Neutral: {summary['neutral']} | ⭐ News Score: {summary['score']}/100")
 for item in news:
-    st.write(f'{item["sentiment"]}  {item["title"]}')
+    st.markdown(
+        f'{item["sentiment"]} '
+        f'[{item["title"]}]({item["link"]})'
+    )
 st.subheader("🤖 AI Recommendation")
 
 stock = yf.Ticker(selected_stock)
