@@ -43,8 +43,10 @@ def get_sentiment(title):
             return "🔴 Negative"
 
     return "🟡 Neutral"
-def get_market_news():
-    url = "https://news.google.com/rss/search?q=Indian+stock+market&hl=en-IN&gl=IN&ceid=IN:en"
+def get_market_news(stock_name="Indian stock market"):
+    query = stock_name.replace(".NS", "").replace("&", " ")
+
+url = f"https://news.google.com/rss/search?q={query}+India+stock&hl=en-IN&gl=IN&ceid=IN:en"
 
     feed = feedparser.parse(url)
 

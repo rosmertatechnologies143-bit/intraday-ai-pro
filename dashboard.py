@@ -132,7 +132,7 @@ st.dataframe(top_buy.head(5), use_container_width=True)
 st.dataframe(df, width="stretch")
 st.subheader("📰 Latest Market News")
 
-news = get_market_news()
+news = get_market_news(selected_stock)
 
 for item in news:
     st.write(f'{item["sentiment"]}  {item["title"]}')
