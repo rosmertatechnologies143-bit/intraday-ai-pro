@@ -112,7 +112,10 @@ c4.metric("📈 TOTAL", len(rows))
 
 # DataFrame
 df = pd.DataFrame(rows)
-
+st.write("Rows =", len(rows))
+st.write("Columns =", df.columns.tolist())
+st.write("Columns:", df.columns.tolist())
+st.write("Rows:", len(df))
 # Search
 if search:
     df = df[df["Stock"].str.contains(search.upper())]
@@ -122,9 +125,9 @@ if filter_option != "ALL":
     df = df[df["Signal"] == filter_option]
 st.subheader("🏆 Top Intraday Picks")
 
-top_buy = df[df["Signal"] == "🟢 STRONG BUY"]
+# top_buy = df[df["Signal"] == "🟢 STRONG BUY"]
 
-st.dataframe(top_buy.head(5), use_container_width=True)
+# st.dataframe(top_buy.head(5), use_container_width=True)
 df = df.sort_values(by="AI Score", ascending=False)
 st.dataframe(df, width="stretch")
 
