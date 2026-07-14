@@ -137,7 +137,7 @@ summary = calculate_news_score(news)
 
 st.info(f"🟢 Positive: {summary['positive']} | 🔴 Negative: {summary['negative']} | 🟡 Neutral: {summary['neutral']} | ⭐ News Score: {summary['score']}/100")
 
- for item in news:
+for item in news:
     st.markdown(
         f'{item["sentiment"]} '
         f'[{item["title"]}]({item["link"]})'
