@@ -122,7 +122,24 @@ c4.metric("📈 TOTAL", len(rows))
 
 # DataFrame
 df = pd.DataFrame(rows)
+top5 = df.sort_values("AI Score", ascending=False).head(5)
 
+st.subheader("🏆 Top 5 AI Picks Today")
+st.dataframe(top5, use_container_width=True)
+for i, row in top5.iterrows():
+
+    if row["AI Score"] >= 90:
+        medal = "🥇"
+    elif row["AI Score"] >= 80:
+        medal = "🥈"
+    else:
+        medal = "🥉"
+
+    st.write(
+        f"{medal} **{row['Stock']}** | "
+        f"⭐ {row['AI Score']} | "
+        f"{row['Signal']}"
+    )
 # Search
 if search:
     df = df[df["Stock"].str.contains(search.upper())]
