@@ -112,3 +112,32 @@ def get_general_market_news():
         })
 
     return news
+def calculate_market_mood(news):
+    positive = 0
+    negative = 0
+    neutral = 0
+
+    for item in news:
+        if item["sentiment"] == "🟢 Positive":
+            positive += 1
+        elif item["sentiment"] == "🔴 Negative":
+            negative += 1
+        else:
+            neutral += 1
+
+    score = positive * 20 + neutral * 10
+
+    if score >= 70:
+        trend = "🟢 Bullish"
+    elif score >= 40:
+        trend = "🟡 Neutral"
+    else:
+        trend = "🔴 Bearish"
+
+    return {
+        "positive": positive,
+        "negative": negative,
+        "neutral": neutral,
+        "score": score,
+        "trend": trend,
+    }

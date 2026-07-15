@@ -8,6 +8,7 @@ from news import (
     get_market_news,
     get_general_market_news,
     calculate_news_score,
+    calculate_market_mood,
     get_hindi_summary,
 )
 st.set_page_config(page_title="Intraday AI Pro", layout="wide")
@@ -139,7 +140,16 @@ st.dataframe(df, width="stretch")
 st.subheader("🌍 Latest Market News")
 
 market_news = get_general_market_news()
+market_mood = calculate_market_mood(market_news)
+st.info(f"""
+🟢 Positive : {market_mood['positive']} |
+🔴 Negative : {market_mood['negative']} |
+🟡 Neutral : {market_mood['neutral']}
 
+⭐ Market Score : {market_mood['score']}/100
+
+📈 Overall Trend : {market_mood['trend']}
+""")
 for item in market_news:
     st.markdown(f'{item["sentiment"]} **{item["title"]}**')
     st.caption(get_hindi_summary(item["title"]))
