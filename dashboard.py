@@ -238,12 +238,18 @@ else:
 if "BUY" in signal:
     confidence = "90%"
     trend = "📈 Bullish"
+    up_probability = 85
+    down_probability = 15
 elif "SELL" in signal:
     confidence = "88%"
     trend = "📉 Bearish"
+    up_probability = 20
+    down_probability = 80
 else:
     confidence = "70%"
     trend = "➡ Sideways"
+    up_probability = 50
+    down_probability = 50
 
 st.info(f"""
 ### {selected_stock}
@@ -269,7 +275,28 @@ st.info(f"""
 
 **Confidence :** {confidence}
 """)
+st.subheader("🧠 AI Prediction Engine")
 
+c1, c2 = st.columns(2)
+
+c1.metric(
+    "📈 Up Probability",
+    f"{up_probability}%"
+)
+
+c2.metric(
+    "📉 Down Probability",
+    f"{down_probability}%"
+)
+
+st.progress(up_probability / 100)
+
+if up_probability >= 80:
+    st.success("🟢 AI Prediction : Stock me tezi aane ki sambhavana zyada hai.")
+elif up_probability >= 60:
+    st.info("🟡 AI Prediction : Stock me halki tezi ki sambhavana hai.")
+else:
+    st.error("🔴 AI Prediction : Stock me girawat ka risk zyada hai.")
 # Pie Chart
 chart_data = pd.DataFrame({
     "Signal": ["BUY", "SELL", "WAIT"],
