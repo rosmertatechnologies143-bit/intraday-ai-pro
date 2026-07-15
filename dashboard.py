@@ -143,7 +143,7 @@ market_news = get_general_market_news()
 for item in market_news:
     st.markdown(f'{item["sentiment"]} **{item["title"]}**')
     st.caption(get_hindi_summary(item["title"]))
-st.subheader("📰 Latest Market News")
+st.subheader(f"📈 {selected_stock.replace('.NS','')} Latest News")
 
 news = get_market_news(selected_stock)
 summary = calculate_news_score(news)
