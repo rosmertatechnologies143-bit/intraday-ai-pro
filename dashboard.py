@@ -221,7 +221,36 @@ live_data["RSI"] = calculate_rsi(live_data)
 
 live_data = calculate_macd(live_data)
 signal = get_signal(live_data)
+# AI Probability Score
+score = 0
 
+# RSI
+rsi = live_data["RSI"].iloc[-1]
+
+if rsi > 60:
+    score += 20
+elif rsi > 50:
+    score += 10
+
+# EMA
+if live_data["EMA9"].iloc[-1] > live_data["EMA20"].iloc[-1]:
+    score += 20
+
+# MACD
+if live_data["MACD"].iloc[-1] > live_data["MACD_SIGNAL"].iloc[-1]:
+    score += 20
+
+# Market Mood
+score += market_mood["score"] * 0.10
+
+# News Score
+score += summary["score"] * 0.15
+
+# Limit Score
+score = min(100, round(score))
+
+up_probability = score
+down_probability = 100 - score
 macd = round(live_data["MACD"].iloc[-1], 2)
 macd_signal = round(live_data["MACD_SIGNAL"].iloc[-1], 2)
 price = round(live_data["Close"].iloc[-1], 2)
