@@ -9,6 +9,7 @@ from indicators import (
     get_signal,
     calculate_macd,
     calculate_adx,
+    calculate_support_resistance,
 )
 from news import (
     get_market_news,
@@ -227,6 +228,7 @@ live_data["RSI"] = calculate_rsi(live_data)
 
 live_data = calculate_macd(live_data)
 live_data = calculate_adx(live_data)
+live_data = calculate_support_resistance(live_data)
 signal = get_signal(live_data)
 # AI Probability Score
 score = 0
@@ -267,10 +269,19 @@ down_probability = 100 - score
 macd = round(live_data["MACD"].iloc[-1], 2)
 macd_signal = round(live_data["MACD_SIGNAL"].iloc[-1], 2)
 price = round(live_data["Close"].iloc[-1], 2)
+resistance = round(live_data["Resistance"].iloc[-1], 2)
+support = round(live_data["Support"].iloc[-1], 2)
 entry = round(price * 1.002, 2)
 stoploss = round(price * 0.99, 2)
 target = round(price * 1.02, 2)
 risk = round(entry - stoploss, 2)
+# Breakout Scanner
+if price > resistance:
+    breakout = "🟢 BREAKOUT"
+elif price < support:
+    breakout = "🔴 BREAKDOWN"
+else:
+    breakout = "🟡 INSIDE RANGE"
 reward = round(target - entry, 2)
 
 if risk > 0:
@@ -299,7 +310,11 @@ st.info(f"""
 **Signal :** {signal}
 
 **Trend :** {trend}
+**Resistance :** ₹{resistance}
 
+**Support :** ₹{support}
+
+**Breakout :** {breakout}
 **Entry :** ₹{entry}
 
 **Stop Loss :** ₹{stoploss}

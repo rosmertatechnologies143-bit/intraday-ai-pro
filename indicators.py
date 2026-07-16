@@ -60,3 +60,14 @@ def calculate_adx(data):
     data["ADX"] = adx.adx()
 
     return data
+def calculate_support_resistance(data):
+
+    resistance = data["High"].rolling(20).max()
+
+    support = data["Low"].rolling(20).min()
+
+    data["Resistance"] = resistance
+
+    data["Support"] = support
+
+    return data
