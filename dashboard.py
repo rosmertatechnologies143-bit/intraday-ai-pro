@@ -310,11 +310,13 @@ st.info(f"""
 **Signal :** {signal}
 
 **Trend :** {trend}
+
 **Resistance :** ₹{resistance}
 
 **Support :** ₹{support}
 
 **Breakout :** {breakout}
+
 **Entry :** ₹{entry}
 
 **Stop Loss :** ₹{stoploss}
