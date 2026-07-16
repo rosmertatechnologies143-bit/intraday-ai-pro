@@ -71,3 +71,6 @@ def calculate_support_resistance(data):
     data["Support"] = support
 
     return data
+def calculate_volume(data):
+    data["AVG_VOLUME"] = data["Volume"].rolling(20).mean()
+    return data

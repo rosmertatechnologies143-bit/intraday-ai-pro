@@ -11,6 +11,7 @@ from indicators import (
     calculate_macd,
     calculate_adx,
     calculate_support_resistance,
+     calculate_volume,
 )
 from news import (
     get_market_news,
@@ -233,6 +234,7 @@ live_data["RSI"] = calculate_rsi(live_data)
 live_data = calculate_macd(live_data)
 live_data = calculate_adx(live_data)
 live_data = calculate_support_resistance(live_data)
+live_data = calculate_volume(live_data)
 signal = get_signal(live_data)
 # AI Probability Score
 score = 0
@@ -275,6 +277,13 @@ macd_signal = round(live_data["MACD_SIGNAL"].iloc[-1], 2)
 price = round(live_data["Close"].iloc[-1], 2)
 resistance = round(live_data["Resistance"].iloc[-1], 2)
 support = round(live_data["Support"].iloc[-1], 2)
+current_volume = live_data["Volume"].iloc[-1]
+average_volume = live_data["AVG_VOLUME"].iloc[-1]
+
+if current_volume > average_volume:
+    volume_status = "🔥 High Volume"
+else:
+    volume_status = "📉 Low Volume"
 entry = round(price * 1.002, 2)
 stoploss = round(price * 0.99, 2)
 target = round(price * 1.02, 2)
