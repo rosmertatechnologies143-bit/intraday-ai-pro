@@ -3,6 +3,7 @@ import yfinance as yf
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import time
 from indicators import (
     calculate_ema,
     calculate_rsi,
@@ -64,15 +65,17 @@ selected_stock = st.selectbox(
     "📈 Select Stock Chart",
     stocks
 )
-
+@st.cache_data(ttl=60)
+def load_stock_data(symbol):
+    stock = yf.Ticker(symbol)
+    return stock.history(period="5d", interval="5m")
 rows = []
 
 # Scanner
 for symbol in stocks:
 
     try:
-        stock = yf.Ticker(symbol)
-        data = stock.history(period="5d", interval="5m")
+        data = load_stock_data(symbol)
 
         if data.empty:
             continue
@@ -113,7 +116,8 @@ for symbol in stocks:
         })
 
     except Exception as e:
-        st.error(f"{symbol}: {e}")
+        st.warning(f"{symbol}: {e}")
+        time.sleep(1)
 
 # Dashboard Cards
 buy_count = sum("BUY" in row["Signal"] for row in rows)
