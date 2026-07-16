@@ -47,3 +47,16 @@ def calculate_macd(data):
     data["MACD_SIGNAL"] = signal
 
     return data
+from ta.trend import ADXIndicator
+
+def calculate_adx(data):
+    adx = ADXIndicator(
+        high=data["High"],
+        low=data["Low"],
+        close=data["Close"],
+        window=14
+    )
+
+    data["ADX"] = adx.adx()
+
+    return data

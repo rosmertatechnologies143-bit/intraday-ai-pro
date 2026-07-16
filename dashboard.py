@@ -3,7 +3,13 @@ import yfinance as yf
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from indicators import calculate_ema, calculate_rsi, get_signal, calculate_macd
+from indicators import (
+    calculate_ema,
+    calculate_rsi,
+    get_signal,
+    calculate_macd,
+    calculate_adx,
+)
 from news import (
     get_market_news,
     get_general_market_news,
@@ -220,6 +226,7 @@ live_data["EMA20"] = calculate_ema(live_data, 20)
 live_data["RSI"] = calculate_rsi(live_data)
 
 live_data = calculate_macd(live_data)
+live_data = calculate_adx(live_data)
 signal = get_signal(live_data)
 # AI Probability Score
 score = 0
@@ -239,7 +246,13 @@ if live_data["EMA9"].iloc[-1] > live_data["EMA20"].iloc[-1]:
 # MACD
 if live_data["MACD"].iloc[-1] > live_data["MACD_SIGNAL"].iloc[-1]:
     score += 20
+# ADX
+adx = live_data["ADX"].iloc[-1]
 
+if adx > 25:
+    score += 15
+elif adx > 20:
+    score += 8
 # Market Mood
 score += market_mood["score"] * 0.10
 
@@ -301,7 +314,7 @@ st.info(f"""
 **MACD :** {macd}
 
 **MACD Signal :** {macd_signal}
-
+**ADX :** {round(adx,2)}
 **Confidence :** {confidence}
 """)
 st.subheader("🧠 AI Prediction Engine")
