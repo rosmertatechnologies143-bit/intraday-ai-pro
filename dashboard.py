@@ -94,15 +94,31 @@ for symbol in stocks:
         stoploss = round(price * 0.99, 2)
         target = round(price * 1.02, 2)
 
+        # Confidence
         if "BUY" in signal:
-            confidence = "90%"
-            ai_score = 95
+         confidence = "90%"
         elif "SELL" in signal:
             confidence = "88%"
-            ai_score = 30
         else:
             confidence = "70%"
-            ai_score = 65
+        # AI Score
+        ai_score = 0
+        # RSI
+        if rsi >= 60:
+            ai_score += 20
+        elif rsi >= 50:
+            ai_score += 10
+        # EMA
+            if data["EMA9"].iloc[-1] > data["EMA20"].iloc[-1]:
+                 ai_score += 20
+         # Signal
+        if "STRONG BUY" in signal:
+            ai_score += 20
+        elif "BUY" in signal:
+            ai_score += 10
+        # Final Score
+        ai_score = min(ai_score, 100)
+
 
         rows.append({
             "Stock": symbol,
@@ -284,7 +300,7 @@ score += summary["score"] * 0.15
 
 # Limit Score
 score = min(100, round(score))
-
+ai_score = score
 up_probability = score
 down_probability = 100 - score
 macd = round(live_data["MACD"].iloc[-1], 2)
