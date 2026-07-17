@@ -84,7 +84,12 @@ for symbol in stocks:
         data["EMA9"] = calculate_ema(data, 9)
         data["EMA20"] = calculate_ema(data, 20)
         data["RSI"] = calculate_rsi(data)
-
+         
+        data = calculate_macd(data)
+        data = calculate_adx(data)
+        data = calculate_support_resistance(data)
+        data = calculate_volume(data)
+        
         signal = get_signal(data)
 
         price = round(data["Close"].iloc[-1], 2)
@@ -109,8 +114,17 @@ for symbol in stocks:
         elif rsi >= 50:
             ai_score += 10
         # EMA
-            if data["EMA9"].iloc[-1] > data["EMA20"].iloc[-1]:
+        if data["EMA9"].iloc[-1] > data["EMA20"].iloc[-1]:
                  ai_score += 20
+        # MACD
+        if data["MACD"].iloc[-1] > data["MACD_SIGNAL"].iloc[-1]:
+                ai_score += 20
+
+        # ADX
+        if data["ADX"].iloc[-1] > 25:
+                ai_score += 15
+        elif data["ADX"].iloc[-1] > 20:
+                ai_score += 8
          # Signal
         if "STRONG BUY" in signal:
             ai_score += 20
