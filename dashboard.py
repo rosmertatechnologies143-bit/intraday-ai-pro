@@ -114,6 +114,7 @@ for symbol in stocks:
             "Target": target,
             "Confidence": confidence,
             "AI Score": ai_score,
+            
         })
 
     except Exception as e:
@@ -134,8 +135,26 @@ c4.metric("📈 TOTAL", len(rows))
 
 # DataFrame
 df = pd.DataFrame(rows)
+# Today's Best Stock
+best_stock = df.sort_values("AI Score", ascending=False).iloc[0]
 top5 = df.sort_values("AI Score", ascending=False).head(5)
+st.success(f"""
+# 🏆 Today's Best Intraday Pick
 
+🥇 Stock : {best_stock['Stock']}
+
+⭐ AI Score : {best_stock['AI Score']}/100
+
+📈 Signal : {best_stock['Signal']}
+
+🎯 Entry : ₹{best_stock['Entry']}
+
+🛑 Stop Loss : ₹{best_stock['Stop Loss']}
+
+🎯 Target : ₹{best_stock['Target']}
+
+🔥 Confidence : {best_stock['Confidence']}
+""")
 st.subheader("🏆 Top 5 AI Picks Today")
 st.dataframe(top5, use_container_width=True)
 for i, row in top5.iterrows():
@@ -159,11 +178,7 @@ if search:
 # Filter
 if filter_option != "ALL":
     df = df[df["Signal"] == filter_option]
-st.subheader("🏆 Top Intraday Picks")
 
-top_buy = df[df["Signal"] == "🟢 STRONG BUY"]
-
-st.dataframe(top_buy.head(5), use_container_width=True)
 st.dataframe(df, width="stretch")
 # 🌍 General Market News
 st.subheader("🌍 Latest Market News")
@@ -329,7 +344,7 @@ st.info(f"""
 **Support :** ₹{support}
 
 **Breakout :** {breakout}
-
+**Volume :** TEST
 **Entry :** ₹{entry}
 
 **Stop Loss :** ₹{stoploss}
