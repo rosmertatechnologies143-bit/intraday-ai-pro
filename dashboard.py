@@ -21,7 +21,7 @@ from news import (
     get_hindi_summary,
 )
 st.set_page_config(page_title="Intraday AI Pro", layout="wide")
-
+st.caption("👨‍💻 Developed by Rakesh Chandrakar")
 st.title("📈 Intraday AI Pro")
 st.subheader("Top 50 NIFTY Scanner")
 
