@@ -402,6 +402,25 @@ st.info(f"""
 **ADX :** {round(adx,2)}
 **Confidence :** {confidence}
 """)
+# Trade Quality
+if ai_score >= 90:
+    quality = "⭐⭐⭐⭐⭐ Excellent Trade"
+elif ai_score >= 75:
+    quality = "⭐⭐⭐⭐ Very Good Trade"
+elif ai_score >= 60:
+    quality = "⭐⭐⭐ Good Trade"
+elif ai_score >= 40:
+    quality = "⭐⭐ Average Trade"
+else:
+    quality = "⭐ Weak Trade"
+
+st.subheader("🏅 AI Trade Quality")
+
+st.success(f"""
+### {quality}
+
+⭐ AI Score : {ai_score}/100
+""")
 st.subheader("🧠 AI Prediction Engine")
 
 c1, c2 = st.columns(2)
