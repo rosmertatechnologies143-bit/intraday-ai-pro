@@ -421,6 +421,36 @@ st.success(f"""
 
 ⭐ AI Score : {ai_score}/100
 """)
+st.subheader("🧠 Why AI Selected This Stock")
+
+reasons = []
+
+if live_data["RSI"].iloc[-1] > 60:
+    reasons.append("✅ RSI Bullish (>60)")
+
+if live_data["EMA9"].iloc[-1] > live_data["EMA20"].iloc[-1]:
+    reasons.append("✅ EMA 9 crossed above EMA 20")
+
+if live_data["MACD"].iloc[-1] > live_data["MACD_SIGNAL"].iloc[-1]:
+    reasons.append("✅ MACD Bullish")
+
+if live_data["ADX"].iloc[-1] > 25:
+    reasons.append("✅ Strong Trend (ADX > 25)")
+
+if current_volume > average_volume:
+    reasons.append("✅ High Trading Volume")
+
+if breakout == "🟢 BREAKOUT":
+    reasons.append("✅ Price Breakout")
+
+if summary["score"] >= 70:
+    reasons.append("✅ Positive News")
+
+if market_mood["score"] >= 70:
+    reasons.append("✅ Bullish Market Mood")
+
+for reason in reasons:
+    st.success(reason)
 st.subheader("🧠 AI Prediction Engine")
 
 c1, c2 = st.columns(2)
