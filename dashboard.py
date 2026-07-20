@@ -422,70 +422,39 @@ st.success(f"""
 ⭐ AI Score : {ai_score}/100
 """)
 st.subheader("🧠 Why AI Selected This Stock")
-st.subheader("⏰ AI Entry Timing")
 
-if (
-    signal == "🟢 STRONG BUY"
-    and current_volume > average_volume
-    and breakout == "🟢 BREAKOUT"
-    and live_data["ADX"].iloc[-1] > 25
-):
-    st.success("""
-🟢 **ENTRY NOW**
-
-✅ Strong Buy Signal
-
-✅ High Volume
-
-✅ Breakout Confirmed
-
-✅ Strong Trend (ADX > 25)
-""")
-
-elif (
-    "BUY" in signal
-    and live_data["EMA9"].iloc[-1] > live_data["EMA20"].iloc[-1]
-):
-    st.warning("""
-🟡 **WAIT FOR PULLBACK**
-
-Price bullish hai, lekin better entry ka wait karo.
-""")
-
-else:
-    st.error("""
-🔴 **AVOID ENTRY**
-
-Trend weak hai ya confirmation complete nahi hai.
-""")
 reasons = []
 
 if live_data["RSI"].iloc[-1] > 60:
-    reasons.append("✅ RSI Bullish (>60)")
+    reasons.append("✅ RSI is above 60 (Strong Momentum)")
 
 if live_data["EMA9"].iloc[-1] > live_data["EMA20"].iloc[-1]:
-    reasons.append("✅ EMA 9 crossed above EMA 20")
+    reasons.append("✅ EMA 9 is above EMA 20 (Bullish Trend)")
 
 if live_data["MACD"].iloc[-1] > live_data["MACD_SIGNAL"].iloc[-1]:
-    reasons.append("✅ MACD Bullish")
+    reasons.append("✅ MACD Bullish Crossover")
 
 if live_data["ADX"].iloc[-1] > 25:
-    reasons.append("✅ Strong Trend (ADX > 25)")
+    reasons.append("✅ ADX above 25 (Strong Trend)")
 
 if current_volume > average_volume:
     reasons.append("✅ High Trading Volume")
 
 if breakout == "🟢 BREAKOUT":
-    reasons.append("✅ Price Breakout")
+    reasons.append("✅ Price Breakout Confirmed")
 
 if summary["score"] >= 70:
-    reasons.append("✅ Positive News")
+    reasons.append("✅ Positive Stock News")
 
 if market_mood["score"] >= 70:
-    reasons.append("✅ Bullish Market Mood")
+    reasons.append("✅ Positive Market Sentiment")
 
-for reason in reasons:
-    st.success(reason)
+if reasons:
+    for reason in reasons:
+        st.success(reason)
+else:
+    st.info("ℹ️ No strong bullish confirmations available right now.")
+
 st.subheader("🧠 AI Prediction Engine")
 
 c1, c2 = st.columns(2)
