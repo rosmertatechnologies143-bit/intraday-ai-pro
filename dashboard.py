@@ -375,11 +375,21 @@ st.info(f"""
 
 **Breakout :** {breakout}
 **Volume :** TEST
-**Entry :** ₹{entry}
+**🎯 Entry :** ₹{entry}
 
-**Stop Loss :** ₹{stoploss}
+**🛑 Stop Loss :** ₹{stoploss}
 
-**Target :** ₹{target}
+**🎯 Target 1 :** ₹{target}
+
+**🎯 Target 2 :** ₹{round(target * 1.01, 2)}
+
+**💰 Expected Profit :** ₹{round(target - entry, 2)}
+
+**📉 Expected Loss :** ₹{round(entry - stoploss, 2)}
+
+**⚖ Risk / Reward :** 1 : {rr_ratio}
+
+**⏰ Holding Time :** 30–90 Minutes
 
 **Risk :** ₹{risk}
 
