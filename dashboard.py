@@ -455,7 +455,40 @@ if reasons:
 else:
     st.info("ℹ️ No strong bullish confirmations available right now.")
 
-st.subheader("🧠 AI Prediction Engine")
+
+st.subheader("⏰ AI Entry Timing")
+
+if (
+    signal == "🟢 STRONG BUY"
+    and current_volume > average_volume
+    and breakout == "🟢 BREAKOUT"
+    and live_data["ADX"].iloc[-1] > 25
+):
+    st.success("""
+🟢 **ENTRY NOW**
+
+✅ Strong Buy Signal
+✅ High Volume
+✅ Breakout Confirmed
+✅ Strong Trend (ADX > 25)
+""")
+
+elif (
+    "BUY" in signal
+    and live_data["EMA9"].iloc[-1] > live_data["EMA20"].iloc[-1]
+):
+    st.warning("""
+🟡 **WAIT FOR PULLBACK**
+
+Price bullish hai, lekin better entry ka wait karo.
+""")
+
+else:
+    st.error("""
+🔴 **AVOID ENTRY**
+
+Trend weak hai ya confirmation complete nahi hai.
+""")
 
 c1, c2 = st.columns(2)
 
