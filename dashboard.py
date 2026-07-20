@@ -489,42 +489,7 @@ else:
 
 Trend weak hai ya confirmation complete nahi hai.
 """)
-st.subheader("💰 Position Size Calculator")
 
-capital = st.number_input(
-    "💵 Trading Capital (₹)",
-    min_value=1000,
-    value=50000,
-    step=1000
-)
-
-risk_percent = st.slider(
-    "⚠️ Risk Per Trade (%)",
-    min_value=1,
-    max_value=5,
-    value=2
-)
-
-max_risk = capital * risk_percent / 100
-
-if risk > 0:
-    quantity = int(max_risk / risk)
-else:
-    quantity = 0
-
-investment = quantity * entry
-
-st.success(f"""
-### 📊 Position Details
-
-💰 Capital : ₹{capital:,.0f}
-
-⚠️ Maximum Risk : ₹{max_risk:,.2f}
-
-📦 Recommended Quantity : {quantity} Shares
-
-💵 Investment Required : ₹{investment:,.2f}
-""")
 c1, c2 = st.columns(2)
 
 c1.metric(
