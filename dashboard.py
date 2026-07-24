@@ -123,6 +123,9 @@ for symbol in stocks:
         elif data["ADX"].iloc[-1] > 20:
                 ai_score += 8
         # Signal Score Removed
+        # Volume
+        if data["Volume"].iloc[-1] > data["AVG_VOLUME"].iloc[-1]:
+            ai_score += 10
         # Final Score
         ai_score = min(ai_score, 100)
         if ai_score >= 90:
@@ -331,8 +334,8 @@ if current_volume > average_volume:
     volume_status = "🔥 High Volume"
 else:
     volume_status = "📉 Low Volume"
-entry = round(data["Resistance"].iloc[-1], 2)
-stoploss = round(data["Support"].iloc[-1], 2)
+entry = round(live_data["Resistance"].iloc[-1], 2)
+stoploss = round(live_data["Support"].iloc[-1], 2)
 
 risk = entry - stoploss
 
@@ -352,20 +355,18 @@ if risk > 0:
 else:
     rr_ratio = 0
 if "BUY" in signal:
-    confidence = "90%"
     trend = "📈 Bullish"
-    up_probability = 85
-    down_probability = 15
+
 elif "SELL" in signal:
-    confidence = "88%"
     trend = "📉 Bearish"
-    up_probability = 20
-    down_probability = 80
+
 else:
-    confidence = "70%"
     trend = "➡ Sideways"
-    up_probability = 50
-    down_probability = 50
+
+confidence = f"{ai_score}%"
+
+up_probability = ai_score
+down_probability = 100 - ai_score
 
 st.info(f"""
 ### {selected_stock}
@@ -379,7 +380,7 @@ st.info(f"""
 **Support :** ₹{support}
 
 **Breakout :** {breakout}
-**Volume :** TEST
+**Volume :** {volume_status}
 **🎯 Entry :** ₹{entry}
 
 **🛑 Stop Loss :** ₹{stoploss}
