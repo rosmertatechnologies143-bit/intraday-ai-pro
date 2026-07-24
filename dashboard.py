@@ -100,19 +100,16 @@ for symbol in stocks:
         target = round(price * 1.02, 2)
 
         # Confidence
-        if "BUY" in signal:
-         confidence = "90%"
-        elif "SELL" in signal:
-            confidence = "88%"
-        else:
-            confidence = "70%"
         # AI Score
         ai_score = 0
         # RSI
-        if rsi >= 60:
+        if 55 <= rsi <= 70:
             ai_score += 20
-        elif rsi >= 50:
+        elif 50 <= rsi < 55:
             ai_score += 10
+        elif rsi > 75:  
+            ai_score -= 10     
+
         # EMA
         if data["EMA9"].iloc[-1] > data["EMA20"].iloc[-1]:
                  ai_score += 20
@@ -125,14 +122,19 @@ for symbol in stocks:
                 ai_score += 15
         elif data["ADX"].iloc[-1] > 20:
                 ai_score += 8
-         # Signal
-        if "STRONG BUY" in signal:
-            ai_score += 20
-        elif "BUY" in signal:
-            ai_score += 10
+        # Signal Score Removed
         # Final Score
         ai_score = min(ai_score, 100)
-
+        if ai_score >= 90:
+            confidence = "95%"
+        elif ai_score >= 80:
+            confidence = "90%"
+        elif ai_score >= 70:
+            confidence = "80%"
+        elif ai_score >= 60:
+            confidence = "70%"
+        else:
+             confidence = "60%"
 
         rows.append({
             "Stock": symbol,
@@ -329,9 +331,12 @@ if current_volume > average_volume:
     volume_status = "🔥 High Volume"
 else:
     volume_status = "📉 Low Volume"
-entry = round(price * 1.002, 2)
-stoploss = round(price * 0.99, 2)
-target = round(price * 1.02, 2)
+entry = round(data["Resistance"].iloc[-1], 2)
+stoploss = round(data["Support"].iloc[-1], 2)
+
+risk = entry - stoploss
+
+target = round(entry + (risk * 2), 2)
 risk = round(entry - stoploss, 2)
 # Breakout Scanner
 if price > resistance:

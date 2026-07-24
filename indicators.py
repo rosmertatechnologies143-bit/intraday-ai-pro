@@ -23,17 +23,54 @@ def calculate_rsi(data, period=14):
 
 # Signal
 def get_signal(data):
+
     last = data.iloc[-1]
 
-    if last["EMA9"] > last["EMA20"] and last["RSI"] > 55:
+    ema9 = last["EMA9"]
+    ema20 = last["EMA20"]
+    rsi = last["RSI"]
+    macd = last["MACD"]
+    macd_signal = last["MACD_SIGNAL"]
+    adx = last["ADX"]
+    volume = last["Volume"]
+    avg_volume = last["AVG_VOLUME"]
+
+    # STRONG BUY
+    if (
+        ema9 > ema20
+        and 55 <= rsi <= 70
+        and macd > macd_signal
+        and adx > 25
+        and volume > avg_volume
+    ):
         return "🟢 STRONG BUY"
 
-    elif last["EMA9"] < last["EMA20"] and last["RSI"] < 45:
+    # BUY
+    elif (
+        ema9 > ema20
+        and rsi > 50
+        and macd > macd_signal
+    ):
+        return "🟢 BUY"
+
+    # STRONG SELL
+    elif (
+        ema9 < ema20
+        and rsi < 45
+        and macd < macd_signal
+        and adx > 25
+    ):
         return "🔴 STRONG SELL"
+
+    # SELL
+    elif (
+        ema9 < ema20
+        and rsi < 50
+    ):
+        return "🔴 SELL"
 
     else:
         return "🟡 WAIT"
-
 
 # MACD
 def calculate_macd(data):
